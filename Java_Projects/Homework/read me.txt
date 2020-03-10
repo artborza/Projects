@@ -1,0 +1,3 @@
+
+
+-มีการใช้ JPA เชื่อมต่อกับ Database Homework จำลอง server ก่อนใช้งาน

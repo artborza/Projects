@@ -1,0 +1,2 @@
+public class var {
+}
