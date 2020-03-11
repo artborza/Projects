@@ -6,7 +6,6 @@
 #include <WiFiManager.h>  
 #include <TridentTD_LineNotify.h>
 #include <time.h>
-#include <SoftwareSerial.h>
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //เชื่อต่อ Wifi
@@ -35,15 +34,12 @@
 
 //กำ ouput ให้หลอดไฟ
 
-    String a;
-    int i;
     int j=0;
   
   
 //กำหนด client
     WiFiClient espClient;
     PubSubClient client(espClient);
-    SoftwareSerial chat(D2,D3); // RX, TX
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 void setup() {
@@ -52,13 +48,10 @@ void setup() {
 //config time
       configTime(timezone, dst, ntp_server1, ntp_server2, ntp_server3);
 // Set output 
-     pinMode(D2, INPUT);
-     pinMode(D3, OUTPUT);
-     pinMode(D4, OUTPUT);
+     pinMode(D1, OUTPUT);
      pinMode(D5, OUTPUT);
      pinMode(D6, OUTPUT);
      Serial.begin(115200);
-     chat.begin(4800);
 // เชื่อต่อไวไฟ
 
       WiFi.begin(ssid1, pass1);
@@ -88,7 +81,7 @@ void loop() {
            Serial.print("failed, rc=");
            Serial.print(client.state());
            Serial.println(" try again in 5 seconds");
-           delay(5000);
+           delay(500);
            j=0;
            return;
               }       
@@ -111,31 +104,6 @@ void loop() {
        LINE.notify("สามารถเก็บเกี่ยวได้");
      }
     }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//รับคำมาจาก Arduino เพื่อส่งคำให้ Line
-      a=chat.readString();
-      if(a== "Sendplant")
-    { 
-        LINE.notify("กำหนดหลุมปลูกแล้ว");
-    }
-      else if(a=="Start"){
-        LINE.notify("เริ่มต้นการปลูกต้นพืช");
-      }
-      else if(a=="Start2"){
-        LINE.notify("เริ่มต้นการเก็บต้นพืช");
-      }
-      else if(a=="Start3"){
-        LINE.notify("เริ่มต้นการถ่ายต้นพืช");
-      }
-      else if(a=="Finish"){
-        digitalWrite(D4,LOW);
-        LINE.notify("การดำเนินการทำงานเสร็จสิ้น");
-      }
-       else if(a=="takephoto"){
-        client.publish("/led", "takeon"); 
-      }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         client.loop();
       }
@@ -171,8 +139,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
 //ปิดปั้ม
      else if(msg =="pumpoff")
       {
-     digitalWrite(D5,LOW);
+        digitalWrite(D5,LOW);
       }
+       msg="0";
 
   }
 
