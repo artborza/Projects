@@ -96,12 +96,16 @@ void loop() {
 //กำค่าให้เวลาเปิดปิด
     time_t now = time(nullptr);
     struct tm* p_tm = localtime(&now);
-    if(time1>0){
-    if(p_tm->tm_hour == 6 && p_tm->tm_min == 0 && p_tm->tm_sec == 0 )
+    if(p_tm->tm_hour == 17 && p_tm->tm_min == 0 && p_tm->tm_sec == 0 )
      {
-       time1++;
-       LINE.notify("ต้นพืชของท้านมีอายุ");
-       LINE.notify("สามารถเก็บเกี่ยวได้");
+        digitalWrite(D6,HIGH);
+        LINE.notify("เริ่มต้นการให้แสงต้นพืช");
+     }
+    }
+        if(p_tm->tm_hour == 6 && p_tm->tm_min == 0 && p_tm->tm_sec == 0 )
+     {
+        digitalWrite(D6,LOW);
+        LINE.notify("หยุดการให้แสงต้นพืช");
      }
     }
 
@@ -125,21 +129,25 @@ void callback(char* topic, byte* payload, unsigned int length) {
       if(msg == "on")
       {
       digitalWrite(D6,HIGH);
+      LINE.notify("หลอดไฟติดแล้ว");
       }
 //ปิดไฟ
       else if(msg == "off")
       {
      digitalWrite(D6,LOW);
+     LINE.notify("หลอดไฟดับแล้ว");
       }
 //เปิดปั้ม
       else if(msg == "pumpon")
       {
      digitalWrite(D5,HIGH);
+     LINE.notify("ปั้มน้ำติดแล้ว");
       }
 //ปิดปั้ม
      else if(msg =="pumpoff")
       {
         digitalWrite(D5,LOW);
+        LINE.notify("ปั้มน้ำปิดแล้วแล้ว");
       }
        msg="0";
 
