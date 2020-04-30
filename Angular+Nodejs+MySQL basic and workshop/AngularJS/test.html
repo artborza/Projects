@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <script src = "angular-1.7.9/angular.min.js"></script>
+    <script>
+        var app = angular.module('myapp', []);
+
+        app.controller('TestController', function($scope){
+            $scope.msg = "Node.JS";
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div ng-app = "myapp">
+        <div ng-controller = "TestController">
+            {{msg}}
+        </div>
+    </div>
+</body>
+
+</html>
+    

@@ -1,0 +1,23 @@
+<script src = "angular-1.7.9/angular.min.js"></script>
+<script>
+    var app = angular.module('myapp', []);
+    app.controller('MyController', function($scope){
+        $scope.mycompute = function(){
+            var x = Number($scope.x);
+            var y = Number($scope.y);
+            var result = x+y;
+
+        $scope.result = result
+        }
+
+    });
+</script>
+
+<div ng-app ="myapp">
+    <div ng-controller = "MyController">
+        <div><input type="text" ng-model="x"></div>
+        <div><input type="text" ng-model="y"></div>
+        <div><button ng-click = "mycompute()">click here</button></div>
+        {{ result }}
+    </div>
+</div>

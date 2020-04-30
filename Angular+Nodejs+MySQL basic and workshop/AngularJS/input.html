@@ -1,0 +1,15 @@
+<script src = "angular-1.7.9/angular.min.js"></script>
+<script>
+    var app = angular.module('myapp', []);
+    app.controller('MyController', function($scope){
+
+    });
+</script>
+
+<div ng-app ="myapp">
+    <div ng-controller = "MyController">
+        <input type = "text" ng-model = "myinput" />
+        {{myinput}}
+
+    </div>
+</div>
